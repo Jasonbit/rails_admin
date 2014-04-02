@@ -31,6 +31,9 @@ module RailsAdmin
                 @object.send("#{name}=", value)
               end
               changes = @object.changes
+              
+              begin
+                
               if @object.save
                 @auditing_adapter && @auditing_adapter.update_object(@object, @abstract_model, _current_user, changes)
                 respond_to do |format|
@@ -40,6 +43,12 @@ module RailsAdmin
               else
                 handle_save_error :edit
               end
+
+            rescue ActiveRecord::Rollback => ex
+              
+              handle_save_error :edit
+              
+            end
 
             end
 
