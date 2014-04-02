@@ -44,7 +44,7 @@ module RailsAdmin
                   handle_save_error :edit
                 end
 
-              rescue ActiveRecord::Rollback => ex
+              rescue ActiveRecord::RecordNotSaved => ex
               
                 handle_save_error :edit
               
